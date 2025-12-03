@@ -4,6 +4,9 @@
 long duration;
 int distance;
 
+// ✅ STORED LOCATION NAME
+String locationName = "pala";
+
 void setup() {
   Serial.begin(9600);
   pinMode(trigPin, OUTPUT);
@@ -22,15 +25,19 @@ void loop() {
   duration = pulseIn(echoPin, HIGH);
   distance = duration * 0.034 / 2;
 
-  // Print distance for debugging
+  // Debug output
   Serial.print(distance);
   Serial.println(" cm");
 
-  // Only send ALERT if very close (<10 cm)
+  // ✅ Send ALERT with LOCATION + DISTANCE
   if (distance > 0 && distance < 10) {
-    Serial.println("ALERT");
-    delay(2000);  // Avoid repeated alerts every loop
+    Serial.print("ALERT,");
+    Serial.print(locationName);
+    Serial.print(",");
+    Serial.println(distance);   // Example: ALERT,pala,8
+
+    delay(2000);  // Prevent spam alerts
   }
 
-  delay(500); // Small delay for stable readings
+  delay(500);
 }
