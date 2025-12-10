@@ -4,7 +4,10 @@
 long duration;
 int distance;
 
-// ✅ STORED LOCATION NAME
+// ✅ DEVICE INFO
+String deviceName = "SewerMonitor-01";
+String deviceId = "DEV-001";
+String installationDate = "2025-12-01";
 String locationName = "pala";
 
 void setup() {
@@ -25,18 +28,25 @@ void loop() {
   duration = pulseIn(echoPin, HIGH);
   distance = duration * 0.034 / 2;
 
-  // Debug output
+  // Debug
   Serial.print(distance);
   Serial.println(" cm");
 
-  // ✅ Send ALERT with LOCATION + DISTANCE
+  // ALERT format:
+  // ALERT,<location>,<distance>,<device_name>,<device_id>,<installation_date>
   if (distance > 0 && distance < 10) {
     Serial.print("ALERT,");
     Serial.print(locationName);
     Serial.print(",");
-    Serial.println(distance);   // Example: ALERT,pala,8
+    Serial.print(distance);
+    Serial.print(",");
+    Serial.print(deviceName);
+    Serial.print(",");
+    Serial.print(deviceId);
+    Serial.print(",");
+    Serial.println(installationDate);
 
-    delay(2000);  // Prevent spam alerts
+    delay(2000);
   }
 
   delay(500);
