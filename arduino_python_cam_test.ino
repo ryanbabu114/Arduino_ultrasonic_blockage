@@ -1,5 +1,5 @@
-#define trigPin 5
-#define echoPin 6
+#define trigPin 6
+#define echoPin 7
 
 long duration;
 int distance;
@@ -9,6 +9,9 @@ String deviceName = "SewerMonitor-01";
 String deviceId = "DEV-001";
 String installationDate = "2025-12-01";
 String locationName = "pala";
+// ✅ DEVICE COORDINATES (DECIMAL)
+String latitude = "9.71472";
+String longitude = "76.68694";
 
 void setup() {
   Serial.begin(9600);
@@ -33,18 +36,16 @@ void loop() {
   Serial.println(" cm");
 
   // ALERT format:
-  // ALERT,<location>,<distance>,<device_name>,<device_id>,<installation_date>
-  if (distance > 0 && distance < 10) {
+  // ALERT,<location>,<distance>,<device_name>,<device_id>,<installation_date>,<lat>,<lon>
+  if (distance > 0 && distance < 4) {
     Serial.print("ALERT,");
-    Serial.print(locationName);
-    Serial.print(",");
-    Serial.print(distance);
-    Serial.print(",");
-    Serial.print(deviceName);
-    Serial.print(",");
-    Serial.print(deviceId);
-    Serial.print(",");
-    Serial.println(installationDate);
+    Serial.print(locationName); Serial.print(",");
+    Serial.print(distance); Serial.print(",");
+    Serial.print(deviceName); Serial.print(",");
+    Serial.print(deviceId); Serial.print(",");
+    Serial.print(installationDate); Serial.print(",");
+    Serial.print(latitude); Serial.print(",");
+    Serial.println(longitude);
 
     delay(2000);
   }
